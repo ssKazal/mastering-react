@@ -2,22 +2,26 @@ import React from 'react';
 
 export default class Counter extends React.Component {
   render() {
+    const { counter } = this.props;
+
     return (
       <div>
-        <button onClick={() => this.props.onIncrement(this.props.counter)} className="btn btn-secondary position-relative btn-sm m-3">
-          Increment
-          <span className={this.getBadgeClass()}>
-            {this.formatCount()}
-          </span>
+        <button className="btn btn-secondary position-relative btn-sm m-3" onClick={() => this.props.onIncrement(counter)}>
+          +<span className={this.getBadgeClass()}>{this.formatCount()}</span>
         </button>
-        <button onClick={() => this.props.onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-3">Delete</button>
+        <button className="btn btn-secondary btn-sm m-3" disabled={counter.value === 0 ? 'disable' : ''} onClick={() => this.props.onDecrement(counter)}>
+          -
+        </button>
+        <button className="btn btn-danger btn-sm m-3" onClick={() => this.props.onDelete(counter)}>
+          X
+        </button>
       </div>
     );
   }
 
   getBadgeClass() {
-    let classes = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-'
-    return classes += this.props.counter.value === 0 ? 'warning' : 'info';
+    let classes = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-';
+    return (classes += this.props.counter.value === 0 ? 'warning' : 'info');
   }
 
   formatCount() {
